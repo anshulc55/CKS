@@ -16,7 +16,7 @@ spec:
               project: test
           podSelector:
             matchLabels:
-              role: client
+              app: client
       ports:
         - protocol: TCP
           port: 80
