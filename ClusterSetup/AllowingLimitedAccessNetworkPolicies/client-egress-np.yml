@@ -12,8 +12,8 @@ spec:
   egress:
     - to:
         - namespaceSelector:
-          matchLabels:
-            project: test
+            matchLabels:
+              project: test
           podSelector:
             matchLabels:
               app: nginx
