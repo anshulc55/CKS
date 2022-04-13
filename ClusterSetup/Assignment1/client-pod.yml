@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd-client
+  namespace: assignment1
+  labels:
+    app: apace_client
+spec:
+  containers:
+    - name: busybox
+      image: radial/busyboxplus:curl
+      command:
+        [
+          "sh",
+          "-c",
+          "while true; do curl -m 3 <Pod IP>:8080; sleep 5; done",
+        ]

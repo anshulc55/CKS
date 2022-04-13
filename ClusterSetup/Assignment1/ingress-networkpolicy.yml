@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nginx-ingress
+  namespace: assignment1
+spec:
+  podSelector:
+    matchLabels:
+      app: apache_webserver
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: apace_client
+      ports:
+        - protocol: TCP
+          port: 8080
