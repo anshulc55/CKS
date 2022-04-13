@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-httpd
+  namespace: assignment1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apache_webserver
+  template:
+    metadata:
+      labels:
+        app: apache_webserver
+    spec:
+      containers:
+        - name: cntr-httpd
+          image: httpd:latest
+          ports:
+            - containerPort: 8080
