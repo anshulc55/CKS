@@ -10,4 +10,4 @@ spec:
     - name: busybox
       image: radial/busyboxplus:curl
       command:
-        ["sh", "-c", "while true; do curl -m 3 <Pod IP>:8080; sleep 5; done"]
+        ["sh", "-c", "while true; do curl -m 3 192.168.36.194:8080; sleep 5; done"]
