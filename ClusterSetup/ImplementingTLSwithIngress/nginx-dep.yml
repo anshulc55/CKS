@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingresstest-nginx
+  namespace: ingresstest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingresstest-nginx
+  template:
+    metadata:
+      labels:
+        app: ingresstest-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
