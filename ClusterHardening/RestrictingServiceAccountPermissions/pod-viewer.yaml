@@ -4,7 +4,7 @@ metadata:
   name: pod-viewer-pod
   namespace: sa-permissions-test
 spec:
-  serviceAccountName: shared-sa
+  serviceAccountName: pod-viewer-sa
   containers:
     - name: busybox
       image: radial/busyboxplus:curl
