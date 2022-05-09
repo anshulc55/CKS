@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: apparmor-disk-write
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/busybox : localhost/deny-write
 spec:
   containers:
     - name: busybox
