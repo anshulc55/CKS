@@ -16,5 +16,6 @@ spec:
     - configMap
     - downwardAPI
     - emptyDir
-    - persistentVolumeClaim - secret
+    - persistentVolumeClaim 
+    - secret
     - projected
