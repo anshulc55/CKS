@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa-test-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: opa-test
+  template:
+    metadata:
+      labels:
+        app: opa-test
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80

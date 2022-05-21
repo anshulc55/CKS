@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-psp-test-priv
+  namespace: psp-test
+spec:
+  serviceAccountName: psp-test-sa
+  containers:
+    - name: nginx
+      image: nginx:1.14.2
+      securityContext:
+        privileged: true

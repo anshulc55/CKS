@@ -1,0 +1,28 @@
+-- Install cfssl.
+sudo apt-get install -y golang-cfssl
+
+-- Generate a CSR file.
+cat <<EOF | cfssl genkey - | cfssljson -bare server
+{
+   "hosts":[
+      "tls-svc.tls-test.svc.cluster.local",
+      "tls-pod.tls-test.pod.cluster.local",
+      "192.0.2.24",
+      "10.0.34.2"
+   ],
+   "CN":"system:node:tls-pod.tls-test.pod.cluster.local",
+   "key":{
+      "algo":"ecdsa",
+      "size":256
+   },
+   "names":[
+      {
+         "O":"system:nodes"
+      }
+   ]
+}
+EOF
+
+-- Get the base64-encoced CSR.
+cat server.csr | base64
+
