@@ -6,5 +6,5 @@ spec:
   restartPolicy: Never
   containers:
     - name: busybox
-      image: busybox:1.33.1@sha256:9687821b96b24fa15fac11d936c3a633ce1506d5471ebef02c349d85bebb11b6
+      image: busybox:1.34.1@sha256:415fbd89e5344c96acf449d94a6f956dbed62e18e831fc83e064db33a34bd549
       command: ["sh", "-c", 'echo "Hello, world!"']
