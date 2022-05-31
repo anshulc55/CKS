@@ -12,13 +12,13 @@ spec:
       labels:
         app: static-analysis-deployment
     spec:
-      hostIPC: true
-      hostNetwork: true
-      hostPID: true
+      hostIPC: false
+      hostNetwork: false
+      hostPID: false
       containers:
         - name: nginx
           image: nginx:latest
           ports:
             - containerPort: 80
           securityContext:
-            privileged: true
+            privileged: false
