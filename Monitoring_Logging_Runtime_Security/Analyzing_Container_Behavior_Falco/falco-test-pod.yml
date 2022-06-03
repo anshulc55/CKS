@@ -3,7 +3,6 @@ kind: Pod
 metadata:
   name: falco-test-pod
 spec:
-  nodeName: k8s-worker1
   containers:
     - name: falco-test
       image: busybox:1.35
