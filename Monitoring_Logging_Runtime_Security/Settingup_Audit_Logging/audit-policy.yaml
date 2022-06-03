@@ -1,0 +1,24 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+# Log changes to Namespaces at the RequestResponse level.
+- level: RequestResponse
+  resources:
+  - group: ""
+    resources: ["namespaces"]
+
+# Log pod changes in the audit-test Namespace at Request level
+- level: Request
+  resources:
+  - group: ""
+    resources: ["pods"]
+  namespaces: ["audit-test"]
+
+# Log all ConfigMap and Secret changes at the Metadata level.
+- level: Metadata
+  resources:
+  - group: ""
+    resources: ["secrets", "configmaps"]
+
+# Catch-all - Log all requests at the metadata level.
+- level: Metadata

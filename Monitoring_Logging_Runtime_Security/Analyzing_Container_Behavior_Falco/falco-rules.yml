@@ -1,0 +1,5 @@
+- rule: spawned_process_in_test_container
+  desc: A process was spawned in the test container.
+  condition: container.name = "falco-test" and evt.type = execve
+  output: "%evt.time,%user.uid,%proc.name,%container.id,%container.name"
+  priority: WARNING
