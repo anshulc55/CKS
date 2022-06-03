@@ -6,5 +6,5 @@ spec:
   nodeName: k8s-worker1
   containers:
     - name: falco-test
-      image: busybox:1.33.1
+      image: busybox:1.35
       command: ["sh", "-c", "while true; do cat /etc/shadow; sleep 5; done"]
