@@ -18,8 +18,11 @@ metadata:
   name: shared-sa-role
   namespace: sa-permissions-test
 rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list"]
   - apiGroups: [""]
-    resources: ["deployments", "pods", "secrets"]
+    resources: ["pods", "secrets"]
     verbs: ["get", "list"]
 
 ---
@@ -31,7 +34,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: shared-sa
-    namespace: auth
+    namespace: sa-permissions-test
 roleRef:
   kind: Role
   name: shared-sa-role
@@ -52,7 +55,7 @@ spec:
         [
           "sh",
           "-c",
-          'TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); while true; do if curl -s -o /dev/null -k -m 3 -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc.cluster.local/api/v1/namespaces/auth/deployments/; then echo "[SUCCESS] Successfully viewed Deployments!"; else echo "[FAIL] Failed to view Deployments!"; fi; sleep 5; done',
+          'TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); while true; do if [ $(curl -s -o /dev/null -k -m 3 -H "Authorization: Bearer $TOKEN"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/sa-permissions-test/deployments/ -w "%{http_code}") ==  "200" ] ; then echo "[SUCCESS] Successfully viewed Deployments!"; else echo "[FAIL] Failed to view Deployments!"; fi; sleep 5; done'
         ]
 
 ---
@@ -70,5 +73,22 @@ spec:
         [
           "sh",
           "-c",
-          'TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); while true; do if curl -s -o /dev/null -k -m 3 -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc.cluster.local/api/v1/namespaces/auth/pods/; then echo "[SUCCESS] Successfully viewed Pods!"; else echo "[FAIL] Failed to view Pods!"; fi; sleep 5; done',
+          'TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); while true; do if [ $(curl -s -o /dev/null -k -m 3 -H "Authorization: Bearer $TOKEN"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/sa-permissions-test/pods/ -w "%{http_code}") ==  "200" ] ; then echo "[SUCCESS] Successfully viewed Pods!"; else echo "[FAIL] Failed to view Pods!"; fi; sleep 5; done'
+        ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-viewer-pod
+  namespace: sa-permissions-test
+spec:
+  serviceAccountName: shared-sa
+  containers:
+    - name: busybox
+      image: radial/busyboxplus:curl
+      command:
+        [
+          "sh",
+          "-c",
+          'TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); while true; do if [ $(curl -s -o /dev/null -k -m 3 -H "Authorization: Bearer $TOKEN"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/sa-permissions-test/secrets/ -w "%{http_code}") ==  "200" ] ; then echo "[SUCCESS] Successfully viewed Secrets!"; else echo "[FAIL] Failed to view Secrets!"; fi; sleep 5; done'
         ]
