@@ -25,7 +25,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: pod-viewer-sa
-    namespace: auth
+    namespace: sa-permissions-test
 roleRef:
   kind: Role
   name: pod-viewer-role
